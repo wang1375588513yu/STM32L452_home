@@ -23,3 +23,9 @@
 #define TEMPERATURE	//temperature
 #define SPI_ENABLE
 
+#define OLED_ENABLE
+#define Simulating_SPI		//模拟spi来显示OLED
+
+
+
+
