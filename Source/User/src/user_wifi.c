@@ -9,7 +9,7 @@
 ** FileName:      user_wifi.c
 ** The Author:    WangYu
 ** Creation Date: 2018-09-30
-** Description:   
+** Description:
 **
 **--------------------------------Version Information---------------------------
 ** Version NO: V1.0
@@ -39,9 +39,9 @@ static void user_wifi_Pipe_Reset(void)
 
 void user_wifi_init(void)
 {
-    esp8266_hardware_init();	
-	user_wifi_recv_pipe = &uart_pipe2_log;
-	user_wifi_Pipe_Reset();
+    esp8266_hardware_init();
+    user_wifi_recv_pipe = &uart_pipe2_log;
+    user_wifi_Pipe_Reset();
 }
 
 static void user_wifi_loop(void)
@@ -73,7 +73,7 @@ static void Socket_normal_output(void)
             if(Get_MillisecTimer_Wifi_delay())return;
 
             user_wifi_send_pipe.time=Get_SysmilliTick();
-			USART2->TDR = ((uint8_t)user_wifi_send_pipe.buf[user_wifi_send_pipe.pout++] & (uint16_t)0x01FF);
+            USART2->TDR = ((uint8_t)user_wifi_send_pipe.buf[user_wifi_send_pipe.pout++] & (uint16_t)0x01FF);
             user_wifi_send_pipe.pout %= user_wifi_send_pipe.size;
             user_wifi_send_pipe.sum--;
             if(user_wifi_send_pipe.pout%1000==0)
@@ -89,7 +89,7 @@ void user_wifi_task(void)
     user_wifi_loop();
     user_wifi_parse_AT_loop();
     user_wifi_AT_loop();
-	Socket_normal_output();
+    Socket_normal_output();
 }
 
 

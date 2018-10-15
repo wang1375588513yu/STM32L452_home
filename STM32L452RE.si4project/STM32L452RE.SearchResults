@@ -1,68 +1,19 @@
----- USB_OTG_CfgTypeDef Matches (9 in 4 files) ----
-stm32l4xx_hal_hcd.h (Source\Kernel\Hal_Lib\Inc) line 76 : 
-typedef USB_OTG_GlobalTypeDef   HCD_TypeDef;
-typedef USB_OTG_CfgTypeDef      HCD_InitTypeDef;
-typedef USB_OTG_HCTypeDef       HCD_HCTypeDef ;   
-typedef USB_OTG_URBStateTypeDef HCD_URBStateTypeDef ;
-typedef USB_OTG_HCStateTypeDef  HCD_HCStateTypeDef ;
-stm32l4xx_hal_pcd.h (Source\Kernel\Hal_Lib\Inc) line 110 : 
-typedef USB_OTG_GlobalTypeDef  PCD_TypeDef;
-typedef USB_OTG_CfgTypeDef     PCD_InitTypeDef;
-typedef USB_OTG_EPTypeDef      PCD_EPTypeDef;
-#endif /* USB_OTG_FS */
+---- ADC_HAL_EC_OFFSET_NB Matches (3 in 2 files) ----
+{anonADC_ChannelConfTypeDef} in stm32l4xx_hal_adc.h (Source\Kernel\Hal_Lib\Inc) : 
+  uint32_t OffsetNumber;           /*!< Select the offset number
+                                        This parameter can be a value of @ref ADC_HAL_EC_OFFSET_NB
+                                        Caution: Only one offset is allowed per channel. This parameter overwrites the last setting. */
 
-stm32l4xx_ll_usb.c (Source\Kernel\Hal_Lib\Src) line 18 : 
-    [..]
-      (#) Fill parameters of Init structure in USB_OTG_CfgTypeDef structure.
-  
-      (#) Call USB_CoreInit() API to initialize the USB Core peripheral.
+  uint32_t Offset;                 /*!< Define the offset to be subtracted from the raw converted data.
+{anonADC_InjectionConfTypeDef} in stm32l4xx_hal_adc_ex.h (Source\Kernel\Hal_Lib\Inc) : 
+  uint32_t InjectedOffsetNumber;          /*!< Selects the offset number.
+                                               This parameter can be a value of @ref ADC_HAL_EC_OFFSET_NB.
+                                               Caution: Only one offset is allowed per channel. This parameter overwrites the last setting. */
 
-stm32l4xx_ll_usb.c (Source\Kernel\Hal_Lib\Src) line 117 : 
-  * @param  USBx: USB Instance
-  * @param  cfg: pointer to a USB_OTG_CfgTypeDef structure that contains
-  *         the configuration information for the specified USBx peripheral.
-  * @retval HAL status
+  uint32_t InjectedOffset;                /*!< Defines the offset to be subtracted from the raw converted data.
+stm32l4xx_hal_adc_ex.h (Source\Kernel\Hal_Lib\Inc) line 267 : 
+
+/** @defgroup ADC_HAL_EC_OFFSET_NB  ADC instance - Offset number
+  * @{
   */
-HAL_StatusTypeDef USB_CoreInit(USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef cfg)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(cfg);
-stm32l4xx_ll_usb.c (Source\Kernel\Hal_Lib\Src) line 194 : 
-  * @param  USBx: Selected device
-  * @param  cfg: pointer to a USB_OTG_CfgTypeDef structure that contains
-  *         the configuration information for the specified USBx peripheral.
-  * @retval HAL status
-  */
-HAL_StatusTypeDef USB_DevInit (USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef cfg)
-{
-  uint32_t index = 0;
-
-stm32l4xx_ll_usb.c (Source\Kernel\Hal_Lib\Src) line 1035 : 
-  * @param  USBx: Selected device
-  * @param  cfg: pointer to a USB_OTG_CfgTypeDef structure that contains
-  *         the configuration information for the specified USBx peripheral.
-  * @retval HAL status
-  */
-HAL_StatusTypeDef USB_HostInit (USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef cfg)
-{
-  uint32_t index = 0;
-  
-{anonUSB_OTG_CfgTypeDef} in stm32l4xx_ll_usb.h (Source\Kernel\Hal_Lib\Inc) : 
-  
-}USB_OTG_CfgTypeDef;
-
-typedef struct
-{
-stm32l4xx_ll_usb.h (Source\Kernel\Hal_Lib\Inc) line 507 : 
-#if defined (USB_OTG_FS)
-HAL_StatusTypeDef USB_CoreInit(USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef Init);
-HAL_StatusTypeDef USB_DevInit(USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef Init);
-HAL_StatusTypeDef USB_EnableGlobalInt(USB_OTG_GlobalTypeDef *USBx);
-HAL_StatusTypeDef USB_DisableGlobalInt(USB_OTG_GlobalTypeDef *USBx);
-HAL_StatusTypeDef USB_SetCurrentMode(USB_OTG_GlobalTypeDef *USBx , USB_ModeTypeDef mode);
-stm32l4xx_ll_usb.h (Source\Kernel\Hal_Lib\Inc) line 540 : 
-
-HAL_StatusTypeDef USB_HostInit (USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef cfg);
-HAL_StatusTypeDef USB_InitFSLSPClkSel(USB_OTG_GlobalTypeDef *USBx , uint8_t freq);
-HAL_StatusTypeDef USB_ResetPort(USB_OTG_GlobalTypeDef *USBx);
-HAL_StatusTypeDef USB_DriveVbus (USB_OTG_GlobalTypeDef *USBx, uint8_t state);
+#define ADC_OFFSET_NONE              (ADC_OFFSET_4 + 1U) /*!< ADC offset disabled: no offset correction for the selected ADC channel */

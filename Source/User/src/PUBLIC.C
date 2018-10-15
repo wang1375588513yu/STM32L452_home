@@ -68,7 +68,7 @@ void Pipe1_Reset(Pipe1_t *pipe)
     pipe->pin=0;
     pipe->pout=0;
     pipe->sum=0;
-	memset((void*)pipe->buf, 0, sizeof(Pipe1_t));
+    memset((void*)pipe->buf, 0, sizeof(Pipe1_t));
 }
 
 void Pipe1_Remove(Pipe1_t *pipe,unsigned int len)
@@ -96,7 +96,7 @@ bool Pipe_Block_Input(Pipe1_t *pipe,const char*packet,unsigned short packetlen)
     pipe->pin%=pipe->size;
     pipe->sum+=packetlen;
     pipe->time=Get_SysmilliTick();
-	uart2_printf((char*)&pipe->buf[0]);
+    uart2_printf((char*)&pipe->buf[0]);
     return true;
 }
 
@@ -385,16 +385,16 @@ char* GetBuffer(void)
 ***************************************/
 signed int st_strlen(unsigned char* str)
 {
-	int i = 0;
-	if(str != NULL)
-	{
-		while(*str++)
-		{
-			i++;
-		}
-	}
-	
-	return i;
+    int i = 0;
+    if(str != NULL)
+    {
+        while(*str++)
+        {
+            i++;
+        }
+    }
+
+    return i;
 }
 
 /**************************************************
@@ -402,17 +402,17 @@ signed int st_strlen(unsigned char* str)
 **************************************************/
 signed int st_strcmp(unsigned char *s,unsigned char *t)
 {
-	while(*s == *t)
-	{
-		if(*s == 0)
-		{
-			return(0);
-		}
-	    ++s;
-	    ++t;
-	}
-	
-	return (*s - *t);
+    while(*s == *t)
+    {
+        if(*s == 0)
+        {
+            return(0);
+        }
+        ++s;
+        ++t;
+    }
+
+    return (*s - *t);
 }
 
 
@@ -421,16 +421,16 @@ signed int st_strcmp(unsigned char *s,unsigned char *t)
 ****************************************************/
 unsigned char *st_strcpy(unsigned char *t,unsigned char *s)
 {
-	unsigned char *d;
+    unsigned char *d;
 
-	d = t;
-	while(*s)
-	{
-	   *t++ = *s++;
-	}
-	*t = 0x0;			// Add string terminator
+    d = t;
+    while(*s)
+    {
+        *t++ = *s++;
+    }
+    *t = 0x0;			// Add string terminator
 
-	return(d);
+    return(d);
 }
 
 
@@ -439,24 +439,24 @@ unsigned char *st_strcpy(unsigned char *t,unsigned char *s)
 ************************************************************************/
 signed int st_strncmp(unsigned char *dest,unsigned char *src,unsigned int Len)
 {
-	signed int i = 0;
+    signed int i = 0;
 
-	for(i = 0; i < Len; i++) 
-	{
-		if(dest[i] != src[i])
-		{
-		    if(dest[i] > src[i])
-			{
-		        return 1;
-		    }
-			else
-			{
-		        return -1;
-		    }
-	    }
-	}
+    for(i = 0; i < Len; i++)
+    {
+        if(dest[i] != src[i])
+        {
+            if(dest[i] > src[i])
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+    }
 
-	return 0;
+    return 0;
 
 }
 
@@ -465,12 +465,12 @@ signed int st_strncmp(unsigned char *dest,unsigned char *src,unsigned int Len)
 ******************************************************/
 signed char st_toupper(unsigned char c)
 {
-	if(((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z')))
-	{
-		c &= 0xDF;
-	}
-	
-	return c;
+    if(((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z')))
+    {
+        c &= 0xDF;
+    }
+
+    return c;
 }
 
 
@@ -479,19 +479,19 @@ signed char st_toupper(unsigned char c)
 **********************************************************/
 unsigned char *st_strcat(unsigned char *s, unsigned char *t)
 {
-	unsigned char *d;
-	
-	d = s;
-	--s;
-	while(*++s);
+    unsigned char *d;
 
-	do 
-	{
-		*s = *t++;
-	}
-	while(*s++);
+    d = s;
+    --s;
+    while(*++s);
 
-	return(d);
+    do
+    {
+        *s = *t++;
+    }
+    while(*s++);
+
+    return(d);
 }
 
 
@@ -500,14 +500,14 @@ unsigned char *st_strcat(unsigned char *s, unsigned char *t)
 **********************************************************************/
 signed int st_memcpy(unsigned char *dest, unsigned char *src, unsigned int Len)
 {
-	signed int i = 0;
+    signed int i = 0;
 
-	for(i = 0; i < Len; i++)
-	{
-		dest[i] = src[i];
-	}
+    for(i = 0; i < Len; i++)
+    {
+        dest[i] = src[i];
+    }
 
-	return(Len);
+    return(Len);
 }
 
 
@@ -516,14 +516,14 @@ signed int st_memcpy(unsigned char *dest, unsigned char *src, unsigned int Len)
 ************************************************************************/
 signed int st_memset(unsigned char *dest,unsigned char byte, unsigned int Len)
 {
-	signed int i = 0;
+    signed int i = 0;
 
-	for(i = 0; i < Len; i++)
-	{
-		dest[i] = byte;
-	}
+    for(i = 0; i < Len; i++)
+    {
+        dest[i] = byte;
+    }
 
-	return(Len);
+    return(Len);
 }
 
 
@@ -533,24 +533,24 @@ signed int st_memset(unsigned char *dest,unsigned char byte, unsigned int Len)
 ************************************************************************/
 signed int st_memcmp(unsigned char* dest, unsigned char* src, unsigned int Len)
 {
-	unsigned int i;
+    unsigned int i;
 
-	for(i = 0; i < Len; i++)
-	{
-		if(dest[i] != src[i])
-		{
-		    if(dest[i] > src[i])
-			{
-		        return 1;
-		    }
-			else
-			{
-		        return -1;
-		    }
-	    }
-	}
-	
-	return 0;
+    for(i = 0; i < Len; i++)
+    {
+        if(dest[i] != src[i])
+        {
+            if(dest[i] > src[i])
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+    }
+
+    return 0;
 }
 /***********************************************************************
 **函数功能：字符串转整数
@@ -558,35 +558,36 @@ signed int st_memcmp(unsigned char* dest, unsigned char* src, unsigned int Len)
 
 int str_toint(unsigned char buf[])
 {
-	int sum = 0;
-	if(st_strlen(buf) == 3)
-	{
-		sum = sum + (buf[0]-'0')*100;
-		sum = sum + (buf[1]-'0')*10;
-		sum = sum + (buf[2]-'0');	
-	}
-	
-	if(st_strlen(buf) == 2)
-	{
-		if(buf[0] == '0')
-		{
-			sum = sum + (buf[1]-'0');
-		}
-		else
-		{
-			sum = sum + (buf[0]-'0')*10;
-			sum = sum + (buf[1]-'0')*1;
-		}
-	}
-	
-	if(st_strlen(buf) == 4)
-	{
-		sum = sum + (buf[0]-'0')*1000;
-		sum = sum + (buf[1]-'0')*100;
-		sum = sum + (buf[2]-'0')*10;
-		sum = sum + (buf[3]-'0');	}
-	
-	return sum;
+    int sum = 0;
+    if(st_strlen(buf) == 3)
+    {
+        sum = sum + (buf[0]-'0')*100;
+        sum = sum + (buf[1]-'0')*10;
+        sum = sum + (buf[2]-'0');
+    }
+
+    if(st_strlen(buf) == 2)
+    {
+        if(buf[0] == '0')
+        {
+            sum = sum + (buf[1]-'0');
+        }
+        else
+        {
+            sum = sum + (buf[0]-'0')*10;
+            sum = sum + (buf[1]-'0')*1;
+        }
+    }
+
+    if(st_strlen(buf) == 4)
+    {
+        sum = sum + (buf[0]-'0')*1000;
+        sum = sum + (buf[1]-'0')*100;
+        sum = sum + (buf[2]-'0')*10;
+        sum = sum + (buf[3]-'0');
+    }
+
+    return sum;
 }
 
 

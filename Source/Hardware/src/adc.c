@@ -14,7 +14,7 @@ void adc_init(void)
     ADC1_Handler.Init.Resolution=ADC_RESOLUTION_12B;             			//12位模式
     ADC1_Handler.Init.DataAlign=ADC_DATAALIGN_RIGHT;             			//右对齐
     ADC1_Handler.Init.ScanConvMode=DISABLE;                      			//非扫描模式
-    ADC1_Handler.Init.EOCSelection=DISABLE;                      			//关闭EOC中断
+    ADC1_Handler.Init.EOCSelection=ADC_EOC_SEQ_CONV;                      	//关闭EOC中断
     ADC1_Handler.Init.ContinuousConvMode=DISABLE;                			//关闭连续转换
     ADC1_Handler.Init.NbrOfConversion=1;                         			//1个转换在规则序列中 也就是只转换规则序列1 
     ADC1_Handler.Init.DiscontinuousConvMode=DISABLE;             			//禁止不连续采样模式
@@ -33,9 +33,11 @@ u16 Get_Adc(u32 ch)
     ADC_ChannelConfTypeDef ADC1_ChanConf;
     
     ADC1_ChanConf.Channel=ch;                                   //通道
-    ADC1_ChanConf.Rank=1;                                       //第1个序列，序列1
+    ADC1_ChanConf.Rank=ADC_REGULAR_RANK_1;                      //第1个序列，序列1
     ADC1_ChanConf.SamplingTime=ADC_SAMPLETIME_247CYCLES_5;      //采样时间
     ADC1_ChanConf.Offset=0;                 
+	ADC1_ChanConf.SingleDiff = ADC_SINGLE_ENDED;
+	ADC1_ChanConf.OffsetNumber = ADC_OFFSET_NONE;
     HAL_ADC_ConfigChannel(&ADC1_Handler,&ADC1_ChanConf);        //通道配置
     HAL_ADC_Start(&ADC1_Handler);                               //开启ADC
     HAL_ADC_PollForConversion(&ADC1_Handler,10);                //轮询转换
@@ -66,7 +68,7 @@ float Get_CPU_Temprate(void)
 	
     adcx=Get_Adc_Average(ADC_CHANNEL_17);	//读取通道16内部温度传感器通道,10次取平均
     temperate=(float)adcx*(3.3/4096);		//电压值
-    temperate=(temperate-1.43)/0.0043 + 25; //转换为温度值
+    temperate=(temperate-1.43f)/0.0043f + 25; //转换为温度值
     return temperate;
 }
 

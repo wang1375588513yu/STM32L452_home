@@ -42,6 +42,7 @@
 #include "timer.h"
 #include "user_wifi.h"
 #include "adc.h"
+#include "oled.h"
 
 /** @addtogroup STM32L4xx_HAL_Examples
   * @{
@@ -94,7 +95,11 @@ int main(void)
 	#endif
 	adc_init();
 	UART2_init(115200);
-	
+	#ifdef OLED_ENABLE
+	OLED_Init();
+	OLED_Clear();
+	OLED_Show_task();
+	#endif
 	
     /* Infinite loop */
     while (1)
@@ -109,7 +114,6 @@ int main(void)
 		temperature = Get_CPU_Temprate();
 		uart2_printf("temperature = %s\n",temperature);
 		#endif
-		
     }
 }
 
@@ -170,7 +174,7 @@ static void SystemClock_Config(void)
 }
 
 #ifdef  USE_FULL_ASSERT
-
+#if 1
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
@@ -194,6 +198,7 @@ void assert_failed(char *file, uint32_t line)
 		delay_ms(30);
     }
 }
+#endif
 #endif
 
 /**

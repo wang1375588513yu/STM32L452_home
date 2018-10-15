@@ -727,11 +727,6 @@
               <FileType>1</FileType>
               <FilePath>..\Source\Hardware\src\spi.c</FilePath>
             </File>
-            <File>
-              <FileName>oled_ctrl.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Source\Hardware\src\oled_ctrl.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

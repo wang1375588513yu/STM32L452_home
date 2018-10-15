@@ -20,7 +20,9 @@
 #include "spi.h"
 #include "delay.h"
 #include "sys.h"
+#include "user_config.h"
 
+#ifdef SPI1_ENABLE
 SPI_HandleTypeDef spi1_handler;
 void SPI1_Init(void)
 {
@@ -50,7 +52,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
     SPI1_RCC_GPIO_CLK_ENABLE();       //使能GPIOF时钟
     __HAL_RCC_SPI1_CLK_ENABLE();        //使能SPI5时钟
 	
-    GPIO_Initure.Pin=SPI1_MOSI_PIN | SPI1_SCK_PIN | SPI1_NSS_PIN; 
+    GPIO_Initure.Pin=SPI1_MOSI_PIN | SPI1_NSS_PIN; 
     GPIO_Initure.Mode=GPIO_MODE_AF_PP;              //复用推挽输出
     GPIO_Initure.Pull=GPIO_PULLUP;                  //上拉
     GPIO_Initure.Speed=GPIO_SPEED_FAST;             //快速            
@@ -60,6 +62,11 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 	GPIO_Initure.Pin=SPI1_MISO_PIN;
     GPIO_Initure.Mode=GPIO_MODE_INPUT;              //INPUT 模式
     HAL_GPIO_Init(SPI1_GPIO,&GPIO_Initure);
+	
+	GPIO_Initure.Pin=SPI1_SCK_PIN;
+    GPIO_Initure.Mode=GPIO_MODE_AF_PP;            
+    HAL_GPIO_Init(SPI1_SCK_GPIO,&GPIO_Initure);
+	
 }
 /*******************************************************************************
 ** FunctionName:  SPI5_SetSpeed
@@ -103,5 +110,89 @@ u8 SPI1_ReadWriteByte(u8 TxData)
  	return Rxdata;          		    //返回收到的数据		
 }
 
+#endif
+
+SPI_HandleTypeDef SPI2_handler;
+void SPI2_Init(void)
+{
+	SPI2_handler.Instance=SPI2;                         //SPI2
+    SPI2_handler.Init.Mode=SPI_MODE_MASTER;             //设置SPI工作模式，设置为主模式
+    SPI2_handler.Init.Direction=SPI_DIRECTION_2LINES;   //设置SPI单向或者双向的数据模式:SPI设置为双线模式
+    SPI2_handler.Init.DataSize=SPI_DATASIZE_8BIT;       //设置SPI的数据大小:SPI发送接收8位帧结构
+    SPI2_handler.Init.CLKPolarity=SPI_POLARITY_HIGH;    //串行同步时钟的空闲状态为高电平
+    SPI2_handler.Init.CLKPhase=SPI_PHASE_2EDGE;         //串行同步时钟的第二个跳变沿（上升或下降）数据被采样
+    SPI2_handler.Init.NSS=SPI_NSS_SOFT;                 //NSS信号由硬件（NSS管脚）还是软件（使用SSI位）管理:内部NSS信号有SSI位控制
+    SPI2_handler.Init.BaudRatePrescaler=SPI_BAUDRATEPRESCALER_256;//定义波特率预分频的值:波特率预分频值为256
+    SPI2_handler.Init.FirstBit=SPI_FIRSTBIT_MSB;        //指定数据传输从MSB位还是LSB位开始:数据传输从MSB位开始
+    SPI2_handler.Init.TIMode=SPI_TIMODE_DISABLE;        //关闭TI模式
+    SPI2_handler.Init.CRCCalculation=SPI_CRCCALCULATION_DISABLE;//关闭硬件CRC校验
+    SPI2_handler.Init.CRCPolynomial=7;                  //CRC值计算的多项式
+    HAL_SPI_Init(&SPI2_handler);						//初始化
+    
+    __HAL_SPI_ENABLE(&SPI2_handler);                    //使能SPI2
+	
+    SPI2_ReadWriteByte(0Xff);                           //启动传输
+}
+
+void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
+{
+    GPIO_InitTypeDef GPIO_Initure;
+    
+    SPI2_RCC_GPIO_CLK_ENABLE();       //使能GPIOF时钟
+    __HAL_RCC_SPI2_CLK_ENABLE();        //使能SPI5时钟
+	
+    GPIO_Initure.Pin=SPI2_MOSI_PIN | SPI2_SCK_PIN; 
+    GPIO_Initure.Mode=GPIO_MODE_AF_PP;              //复用推挽输出
+    GPIO_Initure.Pull=GPIO_PULLUP;                  //上拉
+    GPIO_Initure.Speed=GPIO_SPEED_FAST;             //快速            
+    GPIO_Initure.Alternate=GPIO_AF5_SPI2;           //复用为SPI2
+    HAL_GPIO_Init(SPI2_GPIO,&GPIO_Initure);
+	#if 0
+	GPIO_Initure.Pin=SPI2_MISO_PIN;
+    GPIO_Initure.Mode=GPIO_MODE_INPUT;              //INPUT 模式
+    HAL_GPIO_Init(SPI2_GPIO,&GPIO_Initure);
+	#endif
+}
+/*******************************************************************************
+** FunctionName:  SPI2_SetSpeed
+** Description:   SPI速度设置  SPI速度=fAPB1/分频系数
+** Parameters:    SPI_BaudRatePrescaler: 分频系数 SPI_BAUDRATEPRESCALER_2~SPI_BAUDRATEPRESCALER_256
+** Returned:      None
+** The Author:    WangYu
+** Creation Date: 2018-10-06
+**------------------------------------------------------------------------------
+** Changed By:
+** Changed Date:
+** Changed explain:
+**------------------------------------------------------------------------------
+********************************************************************************/
+void SPI2_SetSpeed(u8 SPI_BaudRatePrescaler)
+{
+    assert_param(IS_SPI_BAUDRATE_PRESCALER(SPI_BaudRatePrescaler));//判断有效性
+    __HAL_SPI_DISABLE(&SPI2_handler);            //关闭SPI
+    SPI2_handler.Instance->CR1&=0XFFC7;          //位3-5清零，用来设置波特率
+    SPI2_handler.Instance->CR1|=SPI_BaudRatePrescaler;//设置SPI速度
+    __HAL_SPI_ENABLE(&SPI2_handler);             //使能SPI
+    
+}
+/*******************************************************************************
+** FunctionName:  SPI2_ReadWriteByte
+** Description:   读写一个字节
+** Parameters:    TxData: 要写入的字节 
+** Returned:      读取到的字节
+** The Author:    WangYu
+** Creation Date: 2018-10-06
+**------------------------------------------------------------------------------
+** Changed By:
+** Changed Date:
+** Changed explain:
+**------------------------------------------------------------------------------
+********************************************************************************/
+u8 SPI2_ReadWriteByte(u8 TxData)
+{
+    u8 Rxdata;
+    HAL_SPI_TransmitReceive(&SPI2_handler,&TxData,&Rxdata,1,1000);       
+ 	return Rxdata;          		    //返回收到的数据		
+}
 
 

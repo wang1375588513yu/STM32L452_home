@@ -20,11 +20,13 @@
 
 #define  LED_ENABLE				
 //#define USER_WIFI
-#define TEMPERATURE	//temperature
-#define SPI_ENABLE
+//#define TEMPERATURE	//temperature
 
 #define OLED_ENABLE
 #define Simulating_SPI		//模拟spi来显示OLED
+
+//#define SPI1_ENABLE
+#define SPI2_ENABLE
 
 
 
