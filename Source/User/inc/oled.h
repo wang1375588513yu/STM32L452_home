@@ -45,6 +45,8 @@
 #define OLED_RES_PIN					GPIO_PIN_12
 #define OLED_DC_PIN						GPIO_PIN_1
 #define OLED_CS_PIN						GPIO_PIN_2
+#define SPI2_SCK_PIN					GPIO_PIN_13	
+#define SPI2_MOSI_PIN					GPIO_PIN_15
 //-----------------OLED¶Ë¿Ú¶¨Òå----------------
 #ifdef SPI1_ENABLE
 #define OLED_SCLK_Clr() HAL_GPIO_WritePin(OLED_GPIO, SPI1_SCK_PIN, GPIO_PIN_RESET);//CLK
@@ -89,7 +91,7 @@ void OLED_ShowCHinese(u8 x,u8 y,u8 no);
 void OLED_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned char y1,unsigned char BMP[]);
 void OLED_Show_task(void);
 
-
+void OLED_Clear_Line(u8 x, u8 y);
 
 #endif
 #endif

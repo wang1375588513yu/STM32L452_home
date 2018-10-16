@@ -112,7 +112,15 @@ int main(void)
 		#endif
 		#ifdef TEMPERATURE
 		temperature = Get_CPU_Temprate();
-		uart2_printf("temperature = %s\n",temperature);
+		temperature = 26.1;
+		OLED_ShowString(0,3,(u8 *)"temperture: ");
+		OLED_ShowNum(90,3,(u32)temperature,3,16);
+		OLED_ShowString(0,6,(u8 *)"humidity  : ");
+		OLED_ShowNum(90,6,2567,3,16);
+		delay_ms(1000);
+		delay_ms(1000);
+		OLED_Clear_Line(3,7);
+//		uart2_printf("temperature = %s\n",temperature);
 		#endif
     }
 }

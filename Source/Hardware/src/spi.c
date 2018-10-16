@@ -112,6 +112,7 @@ u8 SPI1_ReadWriteByte(u8 TxData)
 
 #endif
 
+#ifdef SPI2_ENABLE
 SPI_HandleTypeDef SPI2_handler;
 void SPI2_Init(void)
 {
@@ -194,5 +195,5 @@ u8 SPI2_ReadWriteByte(u8 TxData)
     HAL_SPI_TransmitReceive(&SPI2_handler,&TxData,&Rxdata,1,1000);       
  	return Rxdata;          		    //返回收到的数据		
 }
-
+#endif
 

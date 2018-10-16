@@ -103,8 +103,36 @@ void OLED_Clear(void)
         OLED_WR_Byte (0xb0+i,OLED_CMD);    //设置页地址（0~7）
         OLED_WR_Byte (0x00,OLED_CMD);      //设置显示位置—列低地址
         OLED_WR_Byte (0x10,OLED_CMD);      //设置显示位置—列高地址
-        for(n=0; n<128; n++)OLED_WR_Byte(0,OLED_DATA);
+        for(n=0; n<128; n++)
+		OLED_WR_Byte(0,OLED_DATA);
     } //更新显示
+}
+
+/*******************************************************************************
+** FunctionName:  OLED_Clear_Line
+** Description:   擦除指定行(x-y行)
+** Parameters:    x: 要擦除行起始行号(0-7) 
+**			 	  y: 要擦除行结束行号(0-7)
+** Returned:      None
+** The Author:    WangYu
+** Creation Date: 2018-10-16
+**------------------------------------------------------------------------------
+** Changed By:
+** Changed Date:
+** Changed explain:
+**------------------------------------------------------------------------------
+********************************************************************************/
+void OLED_Clear_Line(u8 x, u8 y)
+{
+	unsigned char __i,__j;
+	for(__j = x; __j<=y; __j++)
+	{
+		OLED_WR_Byte (0xb0+__j,OLED_CMD);    //设置页地址（0~7）
+		OLED_WR_Byte (0x00,OLED_CMD);      //设置显示位置—列低地址
+		OLED_WR_Byte (0x10,OLED_CMD);      //设置显示位置—列高地址
+		for(__i=0; __i<128; __i++)
+		OLED_WR_Byte(0,OLED_DATA);
+	}
 }
 
 //在指定位置显示一个字符,包括部分字符
@@ -234,13 +262,13 @@ void OLED_ShowCHinese(u8 x,u8 y,u8 no)
     OLED_Set_Pos(x,y);
     for(t=0; t<16; t++)
     {
-        OLED_WR_Byte(Hzk[2*no][t],OLED_DATA);
+        OLED_WR_Byte(BeiDouYun[2*no][t],OLED_DATA);
         adder+=1;
     }
     OLED_Set_Pos(x,y+1);
     for(t=0; t<16; t++)
     {
-        OLED_WR_Byte(Hzk[2*no+1][t],OLED_DATA);
+        OLED_WR_Byte(BeiDouYun[2*no+1][t],OLED_DATA);
         adder+=1;
     }
 }
@@ -268,7 +296,7 @@ void OLED_Init(void)
     GPIO_InitTypeDef  GPIO_InitStructure;
 
     OLED_RCC_GPIO_CLK_ENABLE();
-    GPIO_InitStructure.Pin = OLED_RES_PIN|OLED_DC_PIN|OLED_CS_PIN;
+    GPIO_InitStructure.Pin = OLED_RES_PIN|OLED_DC_PIN|OLED_CS_PIN|SPI2_SCK_PIN|SPI2_MOSI_PIN;
     GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP; 		//推挽输出
     GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;	//速度50MHz
 	GPIO_InitStructure.Pull = GPIO_PULLUP;
@@ -327,7 +355,7 @@ void OLED_Show_task(void)
 	OLED_ShowCHinese(90,0,5);	//科
 	OLED_ShowCHinese(108,0,6);	//技
 	
-	OLED_ShowString(0,3,(u8 *)"1.3' OLED TEST");
+	OLED_ShowString(0,3,(u8 *)"temperture:25");
 	OLED_ShowString(0,6,(u8 *)"ASCII:");  
 	OLED_ShowString(63,6,(u8 *)"CODE:");  
 	OLED_ShowChar(48,6,t);//显示ASCII字符	   
@@ -335,7 +363,22 @@ void OLED_Show_task(void)
 	if(t>'~')
 		t=' ';
 	OLED_ShowNum(103,6,t,3,16);//显示ASCII字符的码值
+	delay_ms(1000);
+	delay_ms(1000);
+	OLED_Clear_Line(3,7);
+}
+
+void Horizontal_Scroll(void)
+{
+	
+}
+
+void Vertical_Scrolling(void)
+{
+	
 }
 
 #endif
+
+
 

@@ -9,7 +9,7 @@
 ** FileName:      oled.c
 ** The Author:    WangYu
 ** Creation Date: 2018-10-10
-** Description:   
+** Description:
 **
 **--------------------------------Version Information-----------------------
 ** Version NO: V1.0
@@ -20,10 +20,9 @@
 
 #include "oled.h"
 #include "spi.h"
+#include "oledfont.h"
 
 #ifdef OLED_ENABLE
-#ifdef Simulating_SPI
-
 //OLED的显存
 //存放格式如下.
 //[0]0 1 2 3 ... 127
@@ -34,22 +33,33 @@
 //[5]0 1 2 3 ... 127
 //[6]0 1 2 3 ... 127
 //[7]0 1 2 3 ... 127
-//向SSD1106写入一个字节。
-//dat:要写入的数据/命令
-//cmd:数据/命令标志 0,表示命令;1,表示数据;
+/*******************************************************************************
+** FunctionName:  OLED_WR_Byte
+** Description:   向SSD1106写入一个字节。
+** Parameters:    dat: 要写入的数据/命令 
+**			 	  cmd: 数据/命令标志 0,表示命令;1,表示数据
+** Returned:      None
+** The Author:    WangYu
+** Creation Date: 2018-10-15
+**------------------------------------------------------------------------------
+** Changed By:
+** Changed Date:
+** Changed explain:
+**------------------------------------------------------------------------------
+********************************************************************************/
 void OLED_WR_Byte(u8 dat,u8 cmd)
 {
     u8 __i;
     if(cmd)
-	{
+    {//写数据
         OLED_DC_Set();
     }
-		else
-		{     
-		OLED_DC_Clr();
-		}
-		OLED_CS_Clr();
-	
+    else
+    {//写命令
+        OLED_DC_Clr();
+    }
+    OLED_CS_Clr();
+
     for(__i=0; __i<8; __i++)
     {
         OLED_SCLK_Clr();
@@ -93,16 +103,42 @@ void OLED_Clear(void)
         OLED_WR_Byte (0xb0+i,OLED_CMD);    //设置页地址（0~7）
         OLED_WR_Byte (0x00,OLED_CMD);      //设置显示位置—列低地址
         OLED_WR_Byte (0x10,OLED_CMD);      //设置显示位置—列高地址
-        for(n=0; n<128; n++)OLED_WR_Byte(0,OLED_DATA);
+        for(n=0; n<128; n++)
+		OLED_WR_Byte(0,OLED_DATA);
     } //更新显示
 }
 
+void OLED_Clear_Line(void)
+{
+	unsigned char __i;
+	OLED_WR_Byte (0xb0+i,OLED_CMD);    //设置页地址（0~7）
+        OLED_WR_Byte (0x00,OLED_CMD);      //设置显示位置—列低地址
+        OLED_WR_Byte (0x10,OLED_CMD);      //设置显示位置—列高地址
+        for(__i=0; __i<128; __i++)
+		OLED_WR_Byte(0,OLED_DATA);
+}
 
 //在指定位置显示一个字符,包括部分字符
 //x:0~127
 //y:0~63
 //mode:0,反白显示;1,正常显示
 //size:选择字体 16/12
+
+/*******************************************************************************
+** FunctionName:  OLED_ShowChar
+** Description: 
+** Parameters:    x: 起点坐标(0~127)
+**			 	  y: 起点坐标(0~63) 
+**			  	  chr: 要输入的字符 
+** Returned:      None
+** The Author:    WangYu
+** Creation Date: 2018-10-15
+**------------------------------------------------------------------------------
+** Changed By:
+** Changed Date:
+** Changed explain:
+**------------------------------------------------------------------------------
+********************************************************************************/
 void OLED_ShowChar(u8 x,u8 y,u8 chr)
 {
     unsigned char c=0,i=0;
@@ -134,12 +170,24 @@ u32 oled_pow(u8 m,u8 n)
     while(n--)result*=m;
     return result;
 }
-//显示2个数字
-//x,y :起点坐标
-//len :数字的位数
-//size:字体大小
-//mode:模式	0,填充模式;1,叠加模式
-//num:数值(0~4294967295);
+
+/*******************************************************************************
+** FunctionName:  OLED_ShowNum
+** Description: 
+** Parameters:    x: 起点坐标
+**			 	  y: 起点坐标
+**			 	  num: 数值(0~4294967295)
+**			 	  len: 数字的位数
+**			 	  size: 字体大小
+** Returned:      None
+** The Author:    WangYu
+** Creation Date: 2018-10-15
+**------------------------------------------------------------------------------
+** Changed By:
+** Changed Date:
+** Changed explain:
+**------------------------------------------------------------------------------
+********************************************************************************/
 void OLED_ShowNum(u8 x,u8 y,u32 num,u8 len,u8 size)
 {
     u8 t,temp;
@@ -159,7 +207,22 @@ void OLED_ShowNum(u8 x,u8 y,u32 num,u8 len,u8 size)
         OLED_ShowChar(x+(size/2)*t,y,temp+'0');
     }
 }
-//显示一个字符号串
+
+/*******************************************************************************
+** FunctionName:  OLED_ShowString
+** Description:   显示一个字符串
+** Parameters:    x:  起点坐标
+**			 	  y:  起点坐标
+**			      chr: 要显示的字符 
+** Returned:      None
+** The Author:    WangYu
+** Creation Date: 2018-10-15
+**------------------------------------------------------------------------------
+** Changed By:
+** Changed Date:
+** Changed explain:
+**------------------------------------------------------------------------------
+********************************************************************************/
 void OLED_ShowString(u8 x,u8 y,u8 *chr)
 {
     unsigned char j=0;
@@ -182,13 +245,13 @@ void OLED_ShowCHinese(u8 x,u8 y,u8 no)
     OLED_Set_Pos(x,y);
     for(t=0; t<16; t++)
     {
-        OLED_WR_Byte(Hzk[2*no][t],OLED_DATA);
+        OLED_WR_Byte(BeiDouYun[2*no][t],OLED_DATA);
         adder+=1;
     }
     OLED_Set_Pos(x,y+1);
     for(t=0; t<16; t++)
     {
-        OLED_WR_Byte(Hzk[2*no+1][t],OLED_DATA);
+        OLED_WR_Byte(BeiDouYun[2*no+1][t],OLED_DATA);
         adder+=1;
     }
 }
@@ -214,17 +277,18 @@ void OLED_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned 
 void OLED_Init(void)
 {
     GPIO_InitTypeDef  GPIO_InitStructure;
-	
+
     OLED_RCC_GPIO_CLK_ENABLE();
-    GPIO_InitStructure.Pin = OLED_RES_PIN|OLED_DC_PIN|OLED_CS_PIN;
-    GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP; 		 //推挽输出
-    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;//速度50MHz
-    HAL_GPIO_Init(OLED_GPIO, &GPIO_InitStructure);	  //初始化GPIOD3,6
-   
-	OLED_DC_Set();
-	OLED_CS_Set();
-	
-	OLED_RST_Set();
+    GPIO_InitStructure.Pin = OLED_RES_PIN|OLED_DC_PIN|OLED_CS_PIN|SPI2_SCK_PIN|SPI2_MOSI_PIN;
+    GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP; 		//推挽输出
+    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;	//速度50MHz
+	GPIO_InitStructure.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init(OLED_GPIO, &GPIO_InitStructure);	  	//初始化GPIOD3,6
+
+    OLED_DC_Set();
+    OLED_CS_Set();
+
+    OLED_RST_Set();
     delay_ms(100);
     OLED_RST_Clr();
     delay_ms(200);
@@ -263,9 +327,26 @@ void OLED_Init(void)
     OLED_Set_Pos(0,0);
 }
 
+void OLED_Show_task(void)
+{
+	u8 t;
+	OLED_ShowCHinese(0,0,0);	//中
+	OLED_ShowCHinese(18,0,1);	//景
+	OLED_ShowCHinese(36,0,2);	//园
+	OLED_ShowCHinese(54,0,3);	//电
+	OLED_ShowCHinese(72,0,4);	//子
+	OLED_ShowCHinese(90,0,5);	//科
+	OLED_ShowCHinese(108,0,6);	//技
+	
+	OLED_ShowString(0,3,(u8 *)"temperture:25");
+	OLED_ShowString(0,6,(u8 *)"ASCII:");  
+	OLED_ShowString(63,6,(u8 *)"CODE:");  
+	OLED_ShowChar(48,6,t);//显示ASCII字符	   
+	t++;
+	if(t>'~')
+		t=' ';
+	OLED_ShowNum(103,6,t,3,16);//显示ASCII字符的码值
+}
+
 #endif
-#endif
-
-
-
 
