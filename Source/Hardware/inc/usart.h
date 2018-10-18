@@ -35,8 +35,8 @@
 
 #define UART1_ENABLE		1			//串口开or关
 #define UART2_ENABLE		1
-#define UART3_ENABLE		1
-#define UART4_ENABLE		1
+#define UART3_ENABLE		0
+#define UART4_ENABLE		0
 
 /************************************************************
  ** 当USARTx_USE_PIPE = 1  使用public.h里面的 pipe_t结构体***  

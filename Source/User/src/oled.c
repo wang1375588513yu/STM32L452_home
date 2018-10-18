@@ -33,6 +33,8 @@
 //[5]0 1 2 3 ... 127
 //[6]0 1 2 3 ... 127
 //[7]0 1 2 3 ... 127
+u8 OLED_GRAM[128][8];
+
 /*******************************************************************************
 ** FunctionName:  OLED_WR_Byte
 ** Description:   向SSD1106写入一个字节。
@@ -225,6 +227,19 @@ void OLED_ShowNum(u8 x,u8 y,u32 num,u8 len,u8 size)
     }
 }
 
+void OLED_ShowFloatNum(u8 x,u8 y,float num,u8 len,u8 size)
+{
+	unsigned int integer = 0,decimal = 0;	//整数和小数
+	
+	integer = (u32)num;		//整数部分
+	decimal -= (u32)num; 	
+	decimal *= 1000;		//小数部分
+	
+	OLED_ShowNum(x,y,integer,len,size);			//显示整数部分
+	OLED_ShowChar(x,y+16,'.');					//显示小数点	
+	OLED_ShowNum(x,y+20,decimal,len,size);		//显示小数部分
+}
+
 /*******************************************************************************
 ** FunctionName:  OLED_ShowString
 ** Description:   显示一个字符串
@@ -288,6 +303,35 @@ void OLED_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned 
             OLED_WR_Byte(BMP[j++],OLED_DATA);
         }
     }
+}
+
+//更新显存到LCD		 
+void OLED_Refresh_Gram(void)
+{
+	u8 i,n;		    
+	for(i=0;i<8;i++)  
+	{  
+		OLED_WR_Byte (0xb0+i,OLED_CMD);    //设置页地址（0~7）
+		OLED_WR_Byte (0x00,OLED_CMD);      //设置显示位置—列低地址
+		OLED_WR_Byte (0x10,OLED_CMD);      //设置显示位置—列高地址   
+		for(n=0;n<128;n++)
+			OLED_WR_Byte(OLED_GRAM[n][i],OLED_DATA); 
+	}   
+}
+
+//画点 
+//x:0~127
+//y:0~63
+//t:1 填充 0,清空				   
+void OLED_DrawPoint(u8 x,u8 y,u8 t)
+{
+	u8 pos,bx,temp=0;
+	if(x>127||y>63)return;//超出范围了.
+	pos=7-y/8;
+	bx=y%8;
+	temp=1<<(7-bx);
+	if(t)OLED_GRAM[x][pos]|=temp;
+	else OLED_GRAM[x][pos]&=~temp;	    
 }
 
 //初始化SSD1306

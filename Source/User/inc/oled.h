@@ -91,7 +91,10 @@ void OLED_ShowCHinese(u8 x,u8 y,u8 no);
 void OLED_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned char y1,unsigned char BMP[]);
 void OLED_Show_task(void);
 
-void OLED_Clear_Line(u8 x, u8 y);
+void OLED_Clear_Line(u8 x, u8 y);			//指定行擦除
+void OLED_DrawPoint(u8 x,u8 y,u8 t);		//画点
+void OLED_Refresh_Gram(void);				//更新显存
+void OLED_ShowFloatNum(u8 x,u8 y,float num,u8 len,u8 size);
 
 #endif
 #endif

@@ -113,9 +113,9 @@ int main(void)
 		#ifdef TEMPERATURE
 		temperature = Get_CPU_Temprate();
 		temperature = 26.1;
-		OLED_ShowString(0,3,(u8 *)"temperture: ");
+		OLED_ShowString(0,3,(u8 *)"temp: ");
 		OLED_ShowNum(90,3,(u32)temperature,3,16);
-		OLED_ShowString(0,6,(u8 *)"humidity  : ");
+		OLED_ShowString(0,6,(u8 *)"humi: ");
 		OLED_ShowNum(90,6,2567,3,16);
 		delay_ms(1000);
 		delay_ms(1000);

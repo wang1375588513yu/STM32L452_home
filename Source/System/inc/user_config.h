@@ -28,6 +28,8 @@
 //#define SPI1_ENABLE
 //#define SPI2_ENABLE
 
+#define RTC_ENABLE
+#define DHT11_ENABLE
 
 
 
