@@ -5,7 +5,7 @@
 .\objects\dht11.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\dht11.o: ..\Source\System\inc\stm32l452xx.h
 .\objects\dht11.o: ..\Source\Kernel\Core\cmsis\Include\core_cm4.h
-.\objects\dht11.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\dht11.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\dht11.o: ..\Source\Kernel\Core\cmsis\Include\core_cmInstr.h
 .\objects\dht11.o: ..\Source\Kernel\Core\cmsis\Include\cmsis_armcc.h
 .\objects\dht11.o: ..\Source\Kernel\Core\cmsis\Include\core_cmFunc.h
@@ -17,7 +17,7 @@
 .\objects\dht11.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_def.h
 .\objects\dht11.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\dht11.o: ..\Source\Kernel\Hal_Lib\Inc\Legacy/stm32_hal_legacy.h
-.\objects\dht11.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\dht11.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\dht11.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_rcc_ex.h
 .\objects\dht11.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio.h
 .\objects\dht11.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio_ex.h
@@ -45,7 +45,7 @@
 .\objects\dht11.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_pcd.h
 .\objects\dht11.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_ll_usb.h
 .\objects\dht11.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_pcd_ex.h
-.\objects\dht11.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\dht11.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\dht11.o: ..\Source\User\inc\common.h
 .\objects\dht11.o: ..\Source\System\inc\user_config.h
 .\objects\dht11.o: ..\Source\Hardware\inc\delay.h

@@ -94,7 +94,7 @@ int main(void)
 	user_wifi_init();
 	#endif
 	adc_init();
-	UART2_init(115200);
+	//UART2_init(115200);
 	#ifdef OLED_ENABLE
 	OLED_Init();
 	OLED_Clear();
@@ -199,11 +199,11 @@ void assert_failed(char *file, uint32_t line)
 //	uart2_printf("Wrong parameters value: file %s on line %d\r\n", file, line);
     while (1)
     {	
-		uart2_printf("Wrong parameters value: file %s on line %d\r\n", file, line);
-		Led_On();
-		delay_ms(30);
-		Led_Off();
-		delay_ms(30);
+//		uart2_printf("Wrong parameters value: file %s on line %d\r\n", file, line);
+//		Led_On();
+//		delay_ms(30);
+//		Led_Off();
+//		delay_ms(30);
     }
 }
 #endif

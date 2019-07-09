@@ -5,7 +5,7 @@
 .\objects\oled.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\oled.o: ..\Source\System\inc\stm32l452xx.h
 .\objects\oled.o: ..\Source\Kernel\Core\cmsis\Include\core_cm4.h
-.\objects\oled.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\oled.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\oled.o: ..\Source\Kernel\Core\cmsis\Include\core_cmInstr.h
 .\objects\oled.o: ..\Source\Kernel\Core\cmsis\Include\cmsis_armcc.h
 .\objects\oled.o: ..\Source\Kernel\Core\cmsis\Include\core_cmFunc.h
@@ -17,7 +17,7 @@
 .\objects\oled.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_def.h
 .\objects\oled.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\oled.o: ..\Source\Kernel\Hal_Lib\Inc\Legacy/stm32_hal_legacy.h
-.\objects\oled.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\oled.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\oled.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_rcc_ex.h
 .\objects\oled.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio.h
 .\objects\oled.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio_ex.h
@@ -45,11 +45,11 @@
 .\objects\oled.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_pcd.h
 .\objects\oled.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_ll_usb.h
 .\objects\oled.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_pcd_ex.h
-.\objects\oled.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\oled.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\oled.o: ..\Source\User\inc\common.h
 .\objects\oled.o: ..\Source\Hardware\inc\delay.h
 .\objects\oled.o: ..\Source\System\inc\user_config.h
-.\objects\oled.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\oled.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\oled.o: ..\Source\Hardware\inc\spi.h
 .\objects\oled.o: ..\Source\System\inc\user_config.h
 .\objects\oled.o: ..\Source\User\inc\oledfont.h

@@ -41,6 +41,8 @@
 extern "C" {
 #endif
 
+//#define DMAMUX1
+
 #if defined(DMAMUX1)
 
 /* Includes ------------------------------------------------------------------*/

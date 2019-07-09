@@ -59,6 +59,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal.h"
 
+
+
 #if defined(DMAMUX1)
 
 /** @addtogroup STM32L4xx_HAL_Driver

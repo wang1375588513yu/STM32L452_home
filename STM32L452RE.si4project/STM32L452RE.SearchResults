@@ -1,19 +1,11 @@
----- ADC_HAL_EC_OFFSET_NB Matches (3 in 2 files) ----
-{anonADC_ChannelConfTypeDef} in stm32l4xx_hal_adc.h (Source\Kernel\Hal_Lib\Inc) : 
-  uint32_t OffsetNumber;           /*!< Select the offset number
-                                        This parameter can be a value of @ref ADC_HAL_EC_OFFSET_NB
-                                        Caution: Only one offset is allowed per channel. This parameter overwrites the last setting. */
-
-  uint32_t Offset;                 /*!< Define the offset to be subtracted from the raw converted data.
-{anonADC_InjectionConfTypeDef} in stm32l4xx_hal_adc_ex.h (Source\Kernel\Hal_Lib\Inc) : 
-  uint32_t InjectedOffsetNumber;          /*!< Selects the offset number.
-                                               This parameter can be a value of @ref ADC_HAL_EC_OFFSET_NB.
-                                               Caution: Only one offset is allowed per channel. This parameter overwrites the last setting. */
-
-  uint32_t InjectedOffset;                /*!< Defines the offset to be subtracted from the raw converted data.
-stm32l4xx_hal_adc_ex.h (Source\Kernel\Hal_Lib\Inc) line 267 : 
-
-/** @defgroup ADC_HAL_EC_OFFSET_NB  ADC instance - Offset number
-  * @{
-  */
-#define ADC_OFFSET_NONE              (ADC_OFFSET_4 + 1U) /*!< ADC offset disabled: no offset correction for the selected ADC channel */
+---- UART1_Handler Matches (10 in 1 files) ----
+usart.c (Source\Hardware\src) line 40 : UART_HandleTypeDef 	UART1_Handler;
+UART1_init in usart.c (Source\Hardware\src) :     UART1_Handler.Instance          = USART1;
+UART1_init in usart.c (Source\Hardware\src) :     UART1_Handler.Init.BaudRate     = bound;
+UART1_init in usart.c (Source\Hardware\src) :     UART1_Handler.Init.WordLength   = UART_WORDLENGTH_8B;
+UART1_init in usart.c (Source\Hardware\src) :     UART1_Handler.Init.StopBits     = UART_STOPBITS_1;
+UART1_init in usart.c (Source\Hardware\src) :     UART1_Handler.Init.Parity       = UART_PARITY_NONE;
+UART1_init in usart.c (Source\Hardware\src) :     UART1_Handler.Init.Mode         = UART_MODE_TX_RX;
+UART1_init in usart.c (Source\Hardware\src) :     HAL_UART_Init(&UART1_Handler);
+UART1_init in usart.c (Source\Hardware\src) : 	HAL_UART_Receive_IT(&UART1_Handler, aRxBuffer, RXBUFFERSIZE);
+USART1_IRQHandler in usart.c (Source\Hardware\src) :     if((__HAL_UART_GET_FLAG(&UART1_Handler,UART_FLAG_RXNE)!=RESET))  //接收中断(接收到的数据必须是0x0d 0x0a结尾)

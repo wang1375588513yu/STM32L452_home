@@ -4,7 +4,7 @@
 .\objects\public.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\public.o: ..\Source\System\inc\stm32l452xx.h
 .\objects\public.o: ..\Source\Kernel\Core\cmsis\Include\core_cm4.h
-.\objects\public.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\public.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\public.o: ..\Source\Kernel\Core\cmsis\Include\core_cmInstr.h
 .\objects\public.o: ..\Source\Kernel\Core\cmsis\Include\cmsis_armcc.h
 .\objects\public.o: ..\Source\Kernel\Core\cmsis\Include\core_cmFunc.h
@@ -16,7 +16,7 @@
 .\objects\public.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_def.h
 .\objects\public.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\public.o: ..\Source\Kernel\Hal_Lib\Inc\Legacy/stm32_hal_legacy.h
-.\objects\public.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\public.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\public.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_rcc_ex.h
 .\objects\public.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio.h
 .\objects\public.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio_ex.h
@@ -44,8 +44,8 @@
 .\objects\public.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_pcd.h
 .\objects\public.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_ll_usb.h
 .\objects\public.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_pcd_ex.h
-.\objects\public.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\public.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\public.o: ..\Source\User\inc\common.h
 .\objects\public.o: ..\Source\Hardware\inc\timer.h
 .\objects\public.o: ..\Source\Hardware\inc\usart.h
-.\objects\public.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\public.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

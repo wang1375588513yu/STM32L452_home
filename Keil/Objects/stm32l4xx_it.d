@@ -1,6 +1,6 @@
 .\objects\stm32l4xx_it.o: ..\Source\System\src\stm32l4xx_it.c
 .\objects\stm32l4xx_it.o: ..\Source\System\inc\main.h
-.\objects\stm32l4xx_it.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\stm32l4xx_it.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\stm32l4xx_it.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal.h
 .\objects\stm32l4xx_it.o: ..\Source\System\inc\stm32l4xx_hal_conf.h
 .\objects\stm32l4xx_it.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_rcc.h
@@ -8,7 +8,7 @@
 .\objects\stm32l4xx_it.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\stm32l4xx_it.o: ..\Source\System\inc\stm32l452xx.h
 .\objects\stm32l4xx_it.o: ..\Source\Kernel\Core\cmsis\Include\core_cm4.h
-.\objects\stm32l4xx_it.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\stm32l4xx_it.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\stm32l4xx_it.o: ..\Source\Kernel\Core\cmsis\Include\core_cmInstr.h
 .\objects\stm32l4xx_it.o: ..\Source\Kernel\Core\cmsis\Include\cmsis_armcc.h
 .\objects\stm32l4xx_it.o: ..\Source\Kernel\Core\cmsis\Include\core_cmFunc.h

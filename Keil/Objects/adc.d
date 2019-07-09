@@ -4,7 +4,7 @@
 .\objects\adc.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\adc.o: ..\Source\System\inc\stm32l452xx.h
 .\objects\adc.o: ..\Source\Kernel\Core\cmsis\Include\core_cm4.h
-.\objects\adc.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\adc.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\adc.o: ..\Source\Kernel\Core\cmsis\Include\core_cmInstr.h
 .\objects\adc.o: ..\Source\Kernel\Core\cmsis\Include\cmsis_armcc.h
 .\objects\adc.o: ..\Source\Kernel\Core\cmsis\Include\core_cmFunc.h
@@ -16,7 +16,7 @@
 .\objects\adc.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_def.h
 .\objects\adc.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\adc.o: ..\Source\Kernel\Hal_Lib\Inc\Legacy/stm32_hal_legacy.h
-.\objects\adc.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\adc.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\adc.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_rcc_ex.h
 .\objects\adc.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio.h
 .\objects\adc.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio_ex.h

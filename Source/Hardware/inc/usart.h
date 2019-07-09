@@ -27,13 +27,17 @@
 #include <string.h>
 #include <stdarg.h>
 
+//#include "stm32l4xx_hal.h"
+
+
+
 /*******************************************************************************************	
  ***THE_FIRST_CASE = 1	串口1 PA9,PA10 	串口2 PA2,PA3  串口3 PC4 PC5	串口4 PC10,PC11*****
  ***THE_FIRST_CASE = 0	串口1 PB6,PB7	串口2 PA2,PA3  串口3 PB10,PB11	串口4 PC10,PC11*****
  *******************************************************************************************/
 #define THE_FIRST_CASE		0	//串口的硬件配置方案			
 
-#define UART1_ENABLE		1			//串口开or关
+#define UART1_ENABLE		1	//串口开or关
 #define UART2_ENABLE		1
 #define UART3_ENABLE		0
 #define UART4_ENABLE		0
@@ -46,7 +50,6 @@
 #define USART2_USE_PIPE		0
 #define USART3_USE_PIPE		1
 #define USART4_USE_PIPE		0
-
 
 /******************************************************************************************	
  ***以下定义串口的GPIO端口和引脚，重新定义端口时钟，如果以后移植可以直接更改这里硬件端口***
@@ -93,6 +96,46 @@
 #define   __HAL_RCC_UART4_GPIO_CLK_ENABLE() __HAL_RCC_GPIOC_CLK_ENABLE();
 #endif
 
+#define UART1_DMA_ENABLE		1
+#define UART2_DMA_ENABLE		0
+#define UART3_DMA_ENABLE		0
+#define UART4_DMA_ENABLE		0
+#define UART5_DMA_ENABLE		0
+
+#if 	UART1_DMA_ENABLE
+#define DMA_UART1_TX_REQUST		DMA_REQUEST_2
+#define DMA_UART1_TX_CHANNEL	DMA1_Channel4
+#define DMA_UART1_RX_REQUST		DMA_REQUEST_2
+#define DMA_UART1_RX_CHANNEL	DMA1_Channel5
+#endif
+
+#if 	UART2_DMA_ENABLE
+#define DMA_UART2_TX_REQUST		DMA_REQUEST_2
+#define DMA_UART2_TX_CHANNEL	DMA1_Channel7
+#define DMA_UART2_RX_REQUST		DMA_REQUEST_2
+#define DMA_UART2_RX_CHANNEL	DMA1_Channel6
+#endif
+
+#if 	UART3_DMA_ENABLE
+#define DMA_UART3_TX_REQUST		DMA_REQUEST_2
+#define DMA_UART3_TX_CHANNEL	DMA1_Channel2
+#define DMA_UART3_RX_REQUST		DMA_REQUEST_2
+#define DMA_UART3_RX_CHANNEL	DMA1_Channel3
+#endif
+
+#if 	UART4_DMA_ENABLE
+#define DMA_UART4_TX_REQUST		DMA_REQUEST_2
+#define DMA_UART4_TX_CHANNEL	DMA1_Channel3
+#define DMA_UART4_RX_REQUST		DMA_REQUEST_2
+#define DMA_UART4_RX_CHANNEL	DMA1_Channel5
+#endif
+
+#if		UART5_DMA_ENABLE
+#define DMA_UART5_TX_REQUST		DMA_REQUEST_2
+#define DMA_UART5_TX_CHANNEL	DMA1_Channel4
+#define DMA_UART5_RX_REQUST		DMA_REQUEST_2
+#define DMA_UART5_RX_CHANNEL	DMA1_Channel5
+#endif
 
 #if USART1_USE_PIPE
 extern Pipe_t uart_pipe1;
@@ -121,21 +164,22 @@ extern Pipe1_t uart_pipe4;
 
 void usart_initconfig(void);
 
-void UART1_init(u32 bound);
-void uart1_output(const unsigned char * buf,int len);
+#if UART1_ENABLE
+void uart1_output(unsigned char * buf,int len);
 void uart1_printf(char * string, ...);
-
-void UART2_init(u32 bound);
-void uart2_output(const unsigned char * buf,int len);
+#endif
+#if UART2_ENABLE
+void uart2_output(unsigned char * buf,int len);
 void uart2_printf(char * string, ...);
-
-void UART3_init(u32 bound);
-void uart3_output(const unsigned char * buf,int len);
+#endif
+#if UART3_ENABLE
+void uart3_output(unsigned char * buf,int len);
 void uart3_printf(char * string, ...);
-
-void UART4_init(u32 bound);
-void uart4_output(const unsigned char * buf,int len);
+#endif
+#if UART4_ENABLE
+void uart4_output(unsigned char * buf,int len);
 void uart4_printf(char * string, ...);
+#endif
 
 void uart2_task(void);
  

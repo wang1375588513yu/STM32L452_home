@@ -35,13 +35,111 @@ void _sys_exit(int x)
     x = x;
 }
 
-#define RXBUFFERSIZE   1 //缓存大小
-u8 aRxBuffer[RXBUFFERSIZE];//HAL库使用的串口接收缓冲
 UART_HandleTypeDef 	UART1_Handler;
 UART_HandleTypeDef 	UART2_Handler; 
 UART_HandleTypeDef 	UART3_Handler;
 UART_HandleTypeDef 	UART4_Handler; 
 GPIO_InitTypeDef 	GPIO_Init; 
+DMA_HandleTypeDef   TX_DMA_Handler;
+DMA_HandleTypeDef   RX_DMA_Handler;
+
+#define RXBUFFERSIZE    	1 //缓存大小
+u8 aRxBuffer[RXBUFFERSIZE];//HAL库使用的串口接收缓冲
+
+/*******************************************************************************
+** 函数名称:  	UartTX_DMA_Init
+** 功能描述: 	串口发送DMA初始化
+** 输入参数:	huart: 串口 
+**			 	dma_channel: 通道号
+**			 	requst: 请求数(参考datasheet)
+** 输    出:	None
+** 返 回 值:	None
+** 作    者:	WangYu
+** 日    期：	2019-07-09
+** 修改记录：	
+********************************************************************************/
+static void UartTX_DMA_Init(UART_HandleTypeDef* huart, DMA_Channel_TypeDef *dma_channel, u32 requst)
+{
+	if((u32)dma_channel > (u32)DMA2)
+	{
+		__HAL_RCC_DMA2_CLK_ENABLE();
+	}
+	else
+	{
+		__HAL_RCC_DMA1_CLK_ENABLE();
+	}
+	
+	__HAL_LINKDMA(huart,hdmatx,TX_DMA_Handler);    //将DMA与USART1联系起来(发送DMA)
+	
+	TX_DMA_Handler.Instance 					= dma_channel;			//通道选择
+	TX_DMA_Handler.Init.Direction 				= DMA_MEMORY_TO_PERIPH;	//数据传输方向 内存到外设即发送模式
+	TX_DMA_Handler.Init.Priority 				= DMA_PRIORITY_HIGH;	//优先级	
+	TX_DMA_Handler.Init.Mode 					= DMA_NORMAL;			//正常模式
+	TX_DMA_Handler.Init.MemDataAlignment 		= DMA_MDATAALIGN_BYTE;	//内存数据长度
+	TX_DMA_Handler.Init.PeriphDataAlignment 	= DMA_PDATAALIGN_BYTE;	//外设数据长度
+	TX_DMA_Handler.Init.PeriphInc 				= DMA_PINC_DISABLE;		//外设非增量模式
+	TX_DMA_Handler.Init.MemInc 					= DMA_MINC_ENABLE;		//内存增量模式
+	TX_DMA_Handler.Init.Request 				= requst;				//选择的请求	
+	
+	HAL_DMA_DeInit(&TX_DMA_Handler);
+	HAL_DMA_Init(&TX_DMA_Handler);
+}
+
+/*******************************************************************************
+** 函数名称:  	UartRX_DMA_Init
+** 功能描述: 	串口接收DMA初始化
+** 输入参数:	huart: 串口 
+**			 	dma_channel: 通道号
+**			 	requst: 请求数(参考datasheet)
+** 输    出:	None
+** 返 回 值:	None
+** 作    者:	WangYu
+** 日    期：	2019-07-09
+** 修改记录：	
+********************************************************************************/
+void UartRX_DMA_Init(UART_HandleTypeDef* huart, DMA_Channel_TypeDef *dma_channel, u32 requst)
+{
+	if((u32)dma_channel > (u32)DMA2)
+	{
+		__HAL_RCC_DMA2_CLK_ENABLE();
+	}
+	else
+	{
+		__HAL_RCC_DMA1_CLK_ENABLE();
+	}
+	__HAL_LINKDMA(&UART1_Handler,hdmarx,RX_DMA_Handler);    //将DMA与USART联系起来(接收DMA)
+	
+	RX_DMA_Handler.Instance 					= dma_channel;			//通道选择
+	RX_DMA_Handler.Init.Direction 				= DMA_PERIPH_TO_MEMORY;	//数据传输方向 内存到外设即发送模式
+	RX_DMA_Handler.Init.Priority 				= DMA_PRIORITY_HIGH;	//优先级	
+	RX_DMA_Handler.Init.Mode 					= DMA_NORMAL;			//正常模式
+	RX_DMA_Handler.Init.MemDataAlignment 		= DMA_MDATAALIGN_BYTE;	//内存数据长度
+	RX_DMA_Handler.Init.PeriphDataAlignment 	= DMA_PDATAALIGN_BYTE;	//外设数据长度
+	RX_DMA_Handler.Init.PeriphInc 				= DMA_PINC_DISABLE;		//外设非增量模式
+	RX_DMA_Handler.Init.MemInc 					= DMA_MINC_ENABLE;		//内存增量模式
+	RX_DMA_Handler.Init.Request 				= requst;				//选择的请求	
+	
+	HAL_DMA_DeInit(&RX_DMA_Handler);
+	HAL_DMA_Init(&RX_DMA_Handler);
+}
+
+/*******************************************************************************
+** 函数名称:  	DMA_UART_Transmit
+** 功能描述: 	用DMA模式进行传输
+** 输入参数:	huart: 串口号
+**			 	pData: 数据
+**			 	Size:  数据长度
+** 输    出:	None
+** 返 回 值:	None
+** 作    者:	WangYu
+** 日    期：	2019-07-09
+** 修改记录：	
+********************************************************************************/
+static void DMA_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
+{
+    HAL_DMA_Start(huart->hdmatx, (u32)pData, (uint32_t)&huart->Instance->RDR, Size);//开启DMA传输  
+    huart->Instance->CR3 |= USART_CR3_DMAT;//使能串口DMA发送
+}	 
 
 #if UART1_ENABLE
 #if USART1_USE_PIPE
@@ -57,7 +155,8 @@ void reset_uart_pipe1()
 	Pipe1_Reset(&uart1_pipe);
 	#endif
 }
-void UART1_init(u32 bound)
+
+static void UART1_init(u32 bound)
 {     
     __HAL_RCC_UART1_GPIO_CLK_ENABLE();
     __HAL_RCC_USART1_CLK_ENABLE();
@@ -89,6 +188,7 @@ void UART1_init(u32 bound)
 	HAL_NVIC_EnableIRQ(USART1_IRQn);		//使能USART2中断通道
     HAL_NVIC_SetPriority(USART1_IRQn,3,3);	//抢占优先级3，子优先级3
 
+	UartTX_DMA_Init(&UART1_Handler, DMA_UART1_TX_CHANNEL, DMA_UART1_TX_REQUST);	//初始化接收中断
     /*该函数会开启接收中断,标志位UART_IT_RXNE置位*/
     /*并且设置接收缓冲和接收缓冲最大的数量*/
 	HAL_UART_Receive_IT(&UART1_Handler, aRxBuffer, RXBUFFERSIZE);
@@ -114,8 +214,12 @@ void USART1_IRQHandler(void)
     }
 }
 
-void uart1_output(const unsigned char * buf,int len)
+void uart1_output(unsigned char *buf,int len)
 {
+#if (UART1_DMA_ENABLE == 1)	//使用DMA进行传输
+	DMA_UART_Transmit(&UART1_Handler, (u8 *)buf, len);	
+}
+#else
     unsigned int __i,timespan = Get_SysmilliTick();
     if(buf==NULL ||len==0)  return;
 	
@@ -132,6 +236,7 @@ void uart1_output(const unsigned char * buf,int len)
         USART1->TDR = ((uint8_t)buf[__i] & (uint16_t)0x01FF);
     }
 }
+#endif
 
 void uart1_printf(char * string, ...)
 {
@@ -144,7 +249,7 @@ void uart1_printf(char * string, ...)
     memset(_txBuffer,0,UART_TX_LEN);
     len=vsprintf((char *)_txBuffer, string, arg); /*must use "vsprintf" */
     va_end(arg);
-    uart1_output((const unsigned char *)_txBuffer,len);
+    uart1_output((unsigned char *)_txBuffer,len);
 }
 #endif
 
@@ -166,7 +271,7 @@ void reset_uart_pipe2()
 	#endif
 }
 
-void UART2_init(u32 bound)
+static void UART2_init(u32 bound)
 {
     __HAL_RCC_UART2_GPIO_CLK_ENABLE();
     __HAL_RCC_USART2_CLK_ENABLE();
@@ -217,7 +322,7 @@ void USART2_IRQHandler(void)
     }
 }
 
-void uart2_output(const unsigned char * buf,int len)
+void uart2_output(unsigned char * buf,int len)
 {
     unsigned int __i,timespan = Get_SysmilliTick();
 
@@ -248,7 +353,7 @@ void uart2_printf(char * string, ...)
     memset(_txBuffer,0,UART_TX_LEN);
     len=vsprintf((char *)_txBuffer, string, arg); /*must use "vsprintf" */
     va_end(arg);
-    uart2_output((const unsigned char *)_txBuffer,len);
+    uart2_output((unsigned char *)_txBuffer,len);
 }
 #endif
 
@@ -267,7 +372,7 @@ void reset_uart_pipe3()
 	#endif
 }
 
-void UART3_init(u32 bound)
+static void UART3_init(u32 bound)
 {
     __HAL_RCC_UART3_GPIO_CLK_ENABLE();
     __HAL_RCC_USART3_CLK_ENABLE();
@@ -325,7 +430,7 @@ void USART3_IRQHandler(void)
 }
 
 
-void uart3_output(const unsigned char * buf,int len)
+void uart3_output(unsigned char * buf,int len)
 {
     unsigned int __i,timespan = Get_SysmilliTick();
 
@@ -356,7 +461,7 @@ void uart3_printf(char * string, ...)
     memset(_txBuffer,0,UART_TX_LEN);
     len=vsprintf((char *)_txBuffer, string, arg); /*must use "vsprintf" */
     va_end(arg);
-    uart3_output((const unsigned char *)_txBuffer,len);
+    uart3_output((unsigned char *)_txBuffer,len);
 }
 
 #endif
@@ -376,7 +481,7 @@ void reset_uart_pipe4()
 	Pipe1_Reset(&uart4_pipe);
 	#endif
 }
-void UART4_init(u32 bound)
+static void UART4_init(u32 bound)
 {
     __HAL_RCC_UART4_GPIO_CLK_ENABLE();
     __HAL_RCC_UART4_CLK_ENABLE();
@@ -422,12 +527,10 @@ void UART4_IRQHandler(void)
 		Res=UART4->RDR; 	//接收数据
 		uart4_printf((char*)&Res);
 		Pipe_Block_Input(&uart4_pipe,(const char*)&Res,1);
-    }
-	
+    }	
 }
 
-
-void uart4_output(const unsigned char * buf,int len)
+void uart4_output(unsigned char * buf,int len)
 {
     unsigned int __i,timespan = Get_SysmilliTick();
 
@@ -457,12 +560,12 @@ void uart4_printf(char *string, ...)
     memset(_txBuffer,0,UART_TX_LEN);
     len=vsprintf((char *)_txBuffer, string, arg); /*must use "vsprintf" */
     va_end(arg);
-    uart4_output((const unsigned char *)_txBuffer,len);
+    uart4_output((unsigned char *)_txBuffer,len);
 }
 
 #endif
 
-void usart_initinit(void)
+void usart_initconfig(void)
 {
 #if UART1_ENABLE
     UART1_init(115200);

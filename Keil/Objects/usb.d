@@ -4,7 +4,7 @@
 .\objects\usb.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\usb.o: ..\Source\System\inc\stm32l452xx.h
 .\objects\usb.o: ..\Source\Kernel\Core\cmsis\Include\core_cm4.h
-.\objects\usb.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usb.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\usb.o: ..\Source\Kernel\Core\cmsis\Include\core_cmInstr.h
 .\objects\usb.o: ..\Source\Kernel\Core\cmsis\Include\cmsis_armcc.h
 .\objects\usb.o: ..\Source\Kernel\Core\cmsis\Include\core_cmFunc.h
@@ -16,7 +16,7 @@
 .\objects\usb.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_def.h
 .\objects\usb.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\usb.o: ..\Source\Kernel\Hal_Lib\Inc\Legacy/stm32_hal_legacy.h
-.\objects\usb.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\usb.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\usb.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_rcc_ex.h
 .\objects\usb.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio.h
 .\objects\usb.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_gpio_ex.h

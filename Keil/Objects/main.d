@@ -1,6 +1,6 @@
 .\objects\main.o: ..\Source\System\src\main.c
 .\objects\main.o: ..\Source\System\inc\main.h
-.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal.h
 .\objects\main.o: ..\Source\System\inc\stm32l4xx_hal_conf.h
 .\objects\main.o: ..\Source\Kernel\Hal_Lib\Inc\stm32l4xx_hal_rcc.h
@@ -8,7 +8,7 @@
 .\objects\main.o: ..\Source\System\inc\stm32l4xx.h
 .\objects\main.o: ..\Source\System\inc\stm32l452xx.h
 .\objects\main.o: ..\Source\Kernel\Core\cmsis\Include\core_cm4.h
-.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\main.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\main.o: ..\Source\Kernel\Core\cmsis\Include\core_cmInstr.h
 .\objects\main.o: ..\Source\Kernel\Core\cmsis\Include\cmsis_armcc.h
 .\objects\main.o: ..\Source\Kernel\Core\cmsis\Include\core_cmFunc.h
@@ -50,14 +50,14 @@
 .\objects\main.o: ..\Source\Hardware\inc\delay.h
 .\objects\main.o: ..\Source\Hardware\inc\usart.h
 .\objects\main.o: ..\Source\User\inc\PUBLIC.H
-.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: ..\Source\User\inc\common.h
-.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\main.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
 .\objects\main.o: ..\Source\Hardware\inc\timer.h
 .\objects\main.o: ..\Source\User\inc\user_wifi.h
 .\objects\main.o: ..\Source\Hardware\inc\adc.h
 .\objects\main.o: ..\Source\User\inc\oled.h
 .\objects\main.o: ..\Source\System\inc\user_config.h
-.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\main.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: ..\Source\Hardware\inc\spi.h
 .\objects\main.o: ..\Source\System\inc\user_config.h
